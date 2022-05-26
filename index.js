@@ -1,3 +1,5 @@
+//Kaboom JS
+
 kaboom({
     global: true,
     fullscreen: true,
@@ -5,9 +7,14 @@ kaboom({
     debug: true,
     clearColor: [0, 0, 1, 1],
 })
+
+// variable declarations
+
 const MOVE_SPEED = 120
 const SLICER_SPEED = 100
 const SKELETOR_SPEED = 60
+
+// loading sprites
 
 loadRoot('https://i.imgur.com/')
 loadSprite('link-going-left', '1Xq9biB.png')
@@ -32,7 +39,10 @@ loadSprite('kaboom', 'o9WizfI.png')
 loadSprite('stairs', 'VghkL08.png')
 loadSprite('bg', 'u4DVsx6.png')
 
-scene('game', ({ level, score }) => {
+scene('game', ({
+    level,
+    score
+}) => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
     const maps = [
@@ -74,8 +84,13 @@ scene('game', ({ level, score }) => {
         '%': [sprite('left-door'), solid(), 'door'],
         '^': [sprite('top-door'), 'next-level'],
         $: [sprite('stairs'), 'next-level'],
-        '*': [sprite('slicer'), 'slicer', { dir: -1 }, 'dangerous'],
-        '}': [sprite('skeletor'), 'dangerous', 'skeletor', { dir: -1, timer: 0 }],
+        '*': [sprite('slicer'), 'slicer', {
+            dir: -1
+        }, 'dangerous'],
+        '}': [sprite('skeletor'), 'dangerous', 'skeletor', {
+            dir: -1,
+            timer: 0
+        }],
         ')': [sprite('lanterns'), solid()],
         '(': [sprite('fire-pot'), solid()],
     }
@@ -160,7 +175,7 @@ scene('game', ({ level, score }) => {
         })
         destroy(s)
         scoreLabel.value++
-            scoreLabel.text = scoreLabel.value
+        scoreLabel.text = scoreLabel.value
     })
 
     action('slicer', (s) => {
@@ -185,12 +200,19 @@ scene('game', ({ level, score }) => {
     })
 
     player.overlaps('dangerous', () => {
-        go('lose', { score: scoreLabel.value })
+        go('lose', {
+            score: scoreLabel.value
+        })
     })
 })
 
-scene('lose', ({ score }) => {
+scene('lose', ({
+    score
+}) => {
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)])
 })
 
-start('game', { level: 0, score: 0 })
+start('game', {
+    level: 0,
+    score: 0
+})
